@@ -1,0 +1,25 @@
+[splunk-service.sname]
+name = 'sname'
+host = 'hostname.com' # or IP Address
+port = 8089
+username = 'USERNAME'
+password = 'PASSWORD'
+
+[splunk-query.query_name]
+instances = ['sname',]
+name = 'qname'
+sensitive = false
+tags = ['tag1', 'tag2']
+query = """index={index} {search_string}
+"""
+parameter_names = ['index', 'search_string']
+
+[splunk-query.vpn]
+name = 'vpn'
+sensitive = false
+tags = ['vpn',]
+query = """search earliest={earliest} {user_query}
+index=vpn
+  |fields -_raw
+"""
+parameter_names = ['earliest', 'user_query']

@@ -1,0 +1,14 @@
+FROM python:3.7.2
+
+#RUN pip3 install splunk-sdk tabulate toml pymongo pycrypto docker
+RUN apt-get install git
+RUN git clone https://github.com/deeso/splunk-connector /opt/splunk-connector
+WORKDIR /opt/splunk-connector
+RUN pip3 install -r requirements.txt
+RUN python3 setup.py install
+
+ADD splunk-connector.toml config.toml
+ADD main.py main.py
+ADD python_cmd.sh python_cmd.sh
+
+CMD [ "sh", "python_cmd.sh" ]

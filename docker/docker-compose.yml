@@ -1,0 +1,33 @@
+version: '3'
+services:
+  splunk_connector:
+    build: ./splunk_connector_dockerfile
+    depends_on:
+      - splunk_connector_mongo
+    networks:
+      splunk_connector_net:
+        ipv4_address: 1.120.1.2
+#    ports:
+#      - "8000:8000"
+
+  splunk_connector_mongo:
+    image: mongo:3.4.19-jessie
+    networks:
+      splunk_connector_net:
+        ipv4_address: 1.120.1.3
+    ports:
+#      - "27017:27017"
+      - "29017:27017"
+
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: MONGO_USERNAME_HERE
+      MONGO_INITDB_ROOT_PASSWORD: MONGO_PASSWORD_HERE
+
+networks:
+  splunk_connector_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 1.120.1.0/24
+#       gateway: 1.120.1.1

@@ -1,0 +1,7 @@
+splunk-sdk
+tabulate
+toml
+pymongo
+pycrypto
+docker
+psutil

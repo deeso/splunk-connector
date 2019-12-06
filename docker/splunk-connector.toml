@@ -1,0 +1,69 @@
+[executor-services.splunk-executor-service]
+    executor_name = "splunk-executor-service"
+    executor_start_polling_with_service = true
+    executor_start_service = true
+    executor_poll_time = 0.5
+    executor_num_procs = 4
+
+[mongo-services.splunk-mongo-service]
+    mongo_name = 'splunk-mongo-service'
+    mongo_host = '1.120.1.3'
+    mongo_port = 27017
+    mongo_db = 'splunk-service'
+    mongo_username="MONGO_USERNAME_HERE"
+    mongo_password="MONGO_PASSWORD_HERE"
+    use_ssl = false
+    access_control_collection = 'access_control'
+    access_control_managed_by = 'managed_by'
+    access_control_users = 'allowed_users'
+    access_control_groups = 'allowed_groups'
+    access_control_tokens = 'allowed_tokens'
+
+    admin_collection = 'admins'
+    admin_users = 'admin_users'
+    admin_groups = 'admin_groups'
+    admin_tokens = 'admin_tokens'
+
+    allowed_tokens_collection = 'allowed-tokens'
+    jobs_collection = 'splunk-service-jobs'
+    use_mongo_acl = false
+
+#    mongo_docker_net = '1.20.1.0'
+#    mongo_docker_subnet = '1.20.1.0/24'
+#    mongo_docker_gateway = '1.20.1.254'
+#    mongo_docker_detach = true
+#    mongo_docker_port = 29017
+#    mongo_docker_ip = '1.20.1.3'
+#    mongo_docker_name = 'splunk-mongo-dev'
+
+
+[splunk-services.splunk-server]
+    name = 'splunk-server'
+    host = "splunk-server.example.com"
+    port = 8089
+    username = 'SPLUNK-USERNAME'
+    password = "SPLUNK-PASSWORD"
+    splunk_mongo_service = 'splunk-mongo-service'
+    splunk_executor_service = "splunk-executor-service"
+
+[splunk-query.basic-query-1]
+    name = 'basic-query-1'
+    sensitive = false
+    tags = ['basic']
+    query = '''search index=* earliest={earliest} latest={latest} | head 1'''
+    parameter_names = ['earliest', 'latest']
+    [splunk-query.basic-query-1.lambdas]
+        earliest = '''lambda ts: ts'''
+        latest = '''lambda ts: ts'''
+        user_list = '''lambda user_list: ' OR '.join([user for user in user_list])'''
+
+[splunk-query.basic-query-2]
+    name = 'basic-query-2'
+    sensitive = false
+    tags = ['basic']
+    query = '''search earliest={earliest} latest={latest} {user_list}'''
+    parameter_names = ['earliest', 'latest', 'user_list']
+    [splunk-query.basic-query-2.lambdas]
+        earliest = '''lambda ts: ts'''
+        latest = '''lambda ts: ts'''
+        user_list = '''lambda user_list: ' OR '.join([user for user in user_list])'''
