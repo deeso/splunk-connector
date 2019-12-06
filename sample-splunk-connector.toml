@@ -1,25 +1,87 @@
-[splunk-service.sname]
-name = 'sname'
-host = 'hostname.com' # or IP Address
-port = 8089
-username = 'USERNAME'
-password = 'PASSWORD'
+[splunk-services.sname]
+    name = 'sname'
+    host = '1.120.1.4'
+    port = 8088
+    username = 'SPLUNK_USERNAME_HERE'
+    password = 'SPLUNK_PASSWORD_HERE'
+    poll_time = 60
+    splunk_mongo_service = 'splunk-mongo-service'
+    splunk_executor_service = "splunk-executor-service"
 
-[splunk-query.query_name]
-instances = ['sname',]
-name = 'qname'
-sensitive = false
-tags = ['tag1', 'tag2']
-query = """index={index} {search_string}
-"""
-parameter_names = ['index', 'search_string']
+[executor-services.splunk-executor-service]
+    executor_name = "splunk-executor-service"
+    executor_start_polling_with_service = false
+    executor_start_service = false
+    executor_poll_time = 60.0
+    executor_num_procs = 4
 
-[splunk-query.vpn]
-name = 'vpn'
-sensitive = false
-tags = ['vpn',]
-query = """search earliest={earliest} {user_query}
-index=vpn
-  |fields -_raw
-"""
-parameter_names = ['earliest', 'user_query']
+[mongo-services.splunk-mongo-service]
+    data_key = 'DATA_KEY_HERE'
+    mongo_name = 'splunk-mongo-service'
+    mongo_host = '1.5.67.3'
+    mongo_port = 27017
+    mongo_db = 'splunk-service'
+    mongo_username="MONGO_USERNAME_HERE"
+    mongo_password="MONGO_PASSWORD_HERE"
+    use_ssl = false
+    access_control_collection = 'access_control'
+    access_control_managed_by = 'managed_by'
+    access_control_users = 'allowed_users'
+    access_control_groups = 'allowed_groups'
+    access_control_tokens = 'allowed_tokens'
+
+    admin_collection = 'admins'
+    admin_users = 'admin_users'
+    admin_groups = 'admin_groups'
+    admin_tokens = 'admin_tokens'
+
+    allowed_tokens_collection = 'allowed-tokens'
+    jobs_collection = 'splunk-service-jobs'
+    use_mongo_acl = false
+
+
+[splunk-query.basic-query-1]
+    name = 'basic-query-1'
+    sensitive = false
+    tags = ['basic']
+    query = '''search index=* earliest={earliest} latest={latest} | head 1'''
+    parameter_names = ['earliest', 'latest', 'user_list']
+    [splunk-query.basic-query-1.lambdas]
+        earliest = '''lambda ts: ts'''
+        latest = '''lambda ts: ts'''
+        user_list = '''lambda user_list: ' OR '.join([user['username'] for user in user_list])'''
+
+[splunk-query.basic-query-users-1]
+    name = 'basic-query-users-1'
+    sensitive = false
+    tags = ['basic']
+    query = '''search index=* earliest={earliest} latest={latest} {user_list} | head 1'''
+    parameter_names = ['earliest', 'latest', 'user_list']
+    [splunk-query.basic-query-users-1.lambdas]
+        earliest = '''lambda ts: ts'''
+        latest = '''lambda ts: ts'''
+        user_list = '''lambda user_list: ' OR '.join([user['username'] for user in user_list])'''
+
+[splunk-query.basic-query-users-2]
+    name = 'basic-query-users-2'
+    sensitive = false
+    tags = ['basic']
+    query = """search earliest={earliest} latest={latest} {user_list} index=vpn
+      |fields -_raw | head 1
+    """
+    parameter_names = ['earliest', 'latest', 'user_list']
+    [splunk-query.basic-query-users-2.lambdas]
+        earliest = '''lambda ts: ts'''
+        latest = '''lambda ts: ts'''
+        user_list = '''lambda user_list: ' OR '.join([user['username'] for user in user_list])'''
+
+[splunk-query.basic-query-2]
+    name = 'basic-query-2'
+    sensitive = false
+    tags = ['basic']
+    query = '''search earliest={earliest} latest={latest} {user_list}'''
+    parameter_names = ['earliest', 'latest', 'user_list']
+    [splunk-query.basic-query-2.lambdas]
+        earliest = '''lambda ts: ts'''
+        latest = '''lambda ts: ts'''
+        user_list = '''lambda user_list: ' OR '.join([user for user in user_list])'''
