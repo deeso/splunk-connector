@@ -23,6 +23,31 @@ services:
       MONGO_INITDB_ROOT_USERNAME: MONGO_USERNAME_HERE
       MONGO_INITDB_ROOT_PASSWORD: MONGO_PASSWORD_HERE
 
+  splunkenterprise:
+      image: splunk/splunk:latest
+      networks:
+        splunk_connector_net:
+          ipv4_address: 1.120.1.4
+      ports:
+        - "8000:8000"
+        - "9997:9997"
+        - "8088:8088"
+        - "1514:1514"
+
+      environment:
+        SPLUNK_START_ARGS: --accept-license
+        SPLUNK_ENABLE_LISTEN: 9997
+        SPLUNK_ADD: tcp 1514
+        SPLUNK_PASSWORD: SPLUNK_PASSWORD_HERE
+
+      volumes:
+        - opt-splunk-etc:/opt/splunk/etc
+        - opt-splunk-var:/opt/splunk/var
+
+volumes:
+  opt-splunk-etc:
+  opt-splunk-var:
+
 networks:
   splunk_connector_net:
     driver: bridge
