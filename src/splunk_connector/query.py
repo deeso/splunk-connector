@@ -55,6 +55,14 @@ class SplunkQuery(object):
         OUTPUT_MODE: lambda : None,
     }
 
+    def to_json(self):
+        result = self.get_toml_kargs()
+        lambdas = []
+        result[LAMBDAS] = lambdas
+        for name, sqcallable in self.get_parameter_lambdas().items():
+            lambdas.append(sqcallable.get_toml_kargs())
+        return result
+
     def validate(self):
         if not hasattr(self, SPLUNK_QUERY_QUERY) or getattr(self, SPLUNK_QUERY_QUERY, None) is None:
             raise Exception("Query needs a query")

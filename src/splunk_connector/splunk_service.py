@@ -30,8 +30,10 @@ class SplunkService(object):
         SPLUNK_MONGO_SERVICE: None,
         MONGO_ENCRYPT_DATA: False,
         SPLUNK_EXECUTOR_SERVICE: None,
+        SPLUNK_REST_SERVICE: None,
+        SPLUNK_AUTH_DATABASE: SC_AUTH_DATABASE,
+        SPLUNK_QUERY_DATABASE: SC_QUERY_DATABASE,
     }
-
 
     EXPORTS_DEFAULTS = {
         LATEST_TIME: NOW,

@@ -194,6 +194,20 @@ class Config(object):
         cls.CONFIG[MONGO_SERVICE_BLOCK] = mongo
 
     @classmethod
+    def parse_splunk_rest_service(cls, toml_data):
+        cls.CONFIG[SPLUNK_REST_SERVICE] = SPLUNK_REST_SERVICE_DEFAULTS.copy()
+        sr_block = toml_data.get(SPLUNK_REST_BLOCK)
+        sr_block = {} if sr_block  is None else sr_block
+        if len(sr_block ) == 0:
+            return
+
+        rest_service = {}
+        for k, v in SPLUNK_REST_SERVICE_DEFAULTS.items():
+            rest_service[k] = sr_block.get(k, v)
+
+        cls.CONFIG[MONGO_SERVICE_BLOCK] = mongo
+
+    @classmethod
     def get_mongo_service(cls, name):
         return cls.CONFIG.get(MONGO_SERVICE_BLOCK, {}).get(name, {})
 
@@ -341,3 +355,4 @@ class Config(object):
     @classmethod
     def get_executor_service(cls, name):
         return cls.CONFIG.get(EXECUTOR_SERVICE_BLOCK, {}).get(name, {})
+

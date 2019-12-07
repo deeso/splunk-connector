@@ -12,8 +12,65 @@ SPLUNK_QUERY_DATA = 'data'
 SPLUNK_QUERY_METADATA = 'metadata'
 SPLUNK_MONGO_SERVICE = 'splunk_mongo_service'
 SPLUNK_EXECUTOR_SERVICE = 'splunk_executor_service'
+SPLUNK_REST_SERVICE = 'splunk_rest_service'
 
 
+ENABLE_REST = 'enable'
+
+USE_JWT = False
+
+SPLUNK_QUERY_DATABASE = 'splunk_query_database'
+SPLUNK_AUTH_DATABASE = 'splunk_auth_database'
+SC_AUTH_DATABASE = 'sc-auth-database'
+SC_QUERY_DATABASE = 'sc-query-database'
+
+SC_USERS_COLLECTION = 'sc-users-collection'
+SC_ADMINS_COLLECTION = 'sc-users-collection'
+SC_QUERYS_COLLECTION = 'sc-querys-collection'
+
+VALIDATE_SSL = 'validate_ssl'
+SPLUNK_REST_BLOCK = 'splunk-rest-service'
+CERT_PEM = 'cert_pem'
+KEY_PEM = 'key_pem'
+USERS_COLLECTION = 'users_collection'
+ADMINS_COLLECTION = 'admins_collection'
+
+USER_TOKENS = 'user_tokens'
+ADMIN_TOKENS = 'admin_tokens'
+TOKEN_VALUE = 'token_value'
+USERNAME = 'username'
+NAME = 'name'
+EMAIL = 'email'
+TOKENS = 'tokens'
+UNKNOWN = 'unknown'
+HOST = 'host'
+PORT = 'port'
+USE_SSL = 'use_ssl'
+AUTHENTICATE_ALL_REQUESTS = 'authenticate_all_requests'
+USE_WSGI = 'use_wsgi'
+
+
+SPLUNK_REST_USER_DEFAULTS = {
+    USERNAME: UNKNOWN,
+    NAME: UNKNOWN,
+    EMAIL: UNKNOWN,
+}
+
+SPLUNK_REST_SERVICE_DEFAULTS = {
+    HOST: '',
+    PORT: 9443,
+    USE_SSL: False,
+    CERT_PEM: None,
+    KEY_PEM: None,
+    USE_JWT: False,
+    USERS_COLLECTION: None,
+    ADMINS_COLLECTION: None,
+    USER_TOKENS: list(),
+    ADMIN_TOKENS: list(),
+    TOKENS: dict(),
+    VALIDATE_SSL: False,
+    AUTHENTICATE_ALL_REQUESTS: True,
+}
 
 SPLUNK_SERVICE_CONFIGS = [
     SPLUNK_SERVICE_NAME,
@@ -23,6 +80,9 @@ SPLUNK_SERVICE_CONFIGS = [
     SPLUNK_SERVICE_PASSWORD,
     SPLUNK_MONGO_SERVICE,
     SPLUNK_EXECUTOR_SERVICE,
+    SPLUNK_REST_SERVICE,
+    SPLUNK_QUERY_DATABASE,
+    SPLUNK_AUTH_DATABASE,
 ]
 
 SPLUNK_QUERY_BLOCK = 'splunk-query'
@@ -170,8 +230,10 @@ MONGO_USERNAME = 'mongo_username'
 MONGO_PASSWORD = 'mongo_password'
 MONGO_NAME = 'mongo_name'
 
-ACCESS_CONTROL = 'access_control'
 ACCESS_CONTROL_COLLECTION = 'access_control_collection'
+ACCESS_CONTROL_DBNAME = 'access_control_database'
+
+ACCESS_CONTROL = 'access_control'
 ACCESS_CONTROL_MANAGED_BY = 'access_control_managed_by'
 ACCESS_CONTROL_USERS = 'access_control_users'
 ACCESS_CONTROL_GROUPS = 'access_control_groups'
@@ -193,28 +255,6 @@ JOBS_COLLECTION_VALUE = 'jobs'
 MONGO_ENCRYPT_DATA = 'encrypt_data'
 MONGO_DATA_KEY = 'data_key'
 
-MONGO_CONFIGS = [
-    MONGO_NAME,
-    MONGO_HOST,
-    MONGO_PORT,
-    MONGO_DB,
-    MONGO_PASSWORD,
-    MONGO_USERNAME,
-    USE_MONGO_ACL,
-    ACCESS_CONTROL_COLLECTION,
-    ACCESS_CONTROL_MANAGED_BY,
-    ACCESS_CONTROL_USERS,
-    ACCESS_CONTROL_GROUPS,
-    ACCESS_CONTROL_TOKENS,
-    ADMIN_COLLECTION,
-    ADMIN_USERS,
-    ADMIN_GROUPS,
-    ADMIN_TOKENS,
-    ALLOWED_TOKENS_COLLECTION,
-    JOBS_COLLECTION,
-    USE_SSL,
-    MONGO_DATA_KEY
-]
 
 # LDAP SEARCH
 RAW_QUERY = 'raw_query'

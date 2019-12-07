@@ -7,6 +7,48 @@
     poll_time = 60
     splunk_mongo_service = 'splunk-mongo-service'
     splunk_executor_service = "splunk-executor-service"
+    splunk_rest_service = "splunk-rest-service"
+
+    enable_rest = false
+    use_mongo_acl = false
+
+    splunk_auth_database = 'sc-auth-database'
+    splunk_query_database = 'sc-query-database'
+
+    access_control_collection = 'access_control'
+    access_control_managed_by = 'managed_by'
+    access_control_users = 'allowed_users'
+    access_control_groups = 'allowed_groups'
+    access_control_tokens = 'allowed_tokens'
+
+    admin_collection = 'admins'
+    admin_users = 'admin_users'
+    admin_groups = 'admin_groups'
+    admin_tokens = 'admin_tokens'
+
+    allowed_tokens_collection = 'allowed-tokens'
+    jobs_collection = 'splunk-service-jobs'
+    querys_collection = 'sc-querys-collection'
+
+[splunk-rest-service]
+    host = '0.0.0.0'
+    port = 9443
+    use_ssl = False
+    cert_pem = '/path/rest/server.pem'
+    key_pem = '/path/rest/server.key'
+    users_collection = 'sc-users-collection'
+    admins_collection = 'sc-admins-collection'
+    authenticate_all_requests = True
+    use_jwt = False
+    use_wsgi = False
+    user_tokens = ['admin_bootstrap_token']
+    admin_tokens = ['user_bootstrap_token']
+    [splunk-services.splunk_rest.tokens.admin_bootstrap_token]
+        token_value = "TOKEN_VALUE_HERE"
+        username = 'admin_bootstrap_token'
+        name = 'Admin Bootstrap Token'
+        email = 'admin@127.0.0.1'
+
 
 [executor-services.splunk-executor-service]
     executor_name = "splunk-executor-service"
@@ -24,20 +66,6 @@
     mongo_username="MONGO_USERNAME_HERE"
     mongo_password="MONGO_PASSWORD_HERE"
     use_ssl = false
-    access_control_collection = 'access_control'
-    access_control_managed_by = 'managed_by'
-    access_control_users = 'allowed_users'
-    access_control_groups = 'allowed_groups'
-    access_control_tokens = 'allowed_tokens'
-
-    admin_collection = 'admins'
-    admin_users = 'admin_users'
-    admin_groups = 'admin_groups'
-    admin_tokens = 'admin_tokens'
-
-    allowed_tokens_collection = 'allowed-tokens'
-    jobs_collection = 'splunk-service-jobs'
-    use_mongo_acl = false
 
 
 [splunk-query.basic-query-1]
