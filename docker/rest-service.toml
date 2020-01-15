@@ -1,0 +1,61 @@
+[rest-service]
+    host = '0.0.0.0'
+    port = 9443
+    use_ssl = false
+    cert_pem = '/path/rest/server.pem'
+    key_pem = '/path/rest/server.key'
+    use_jwt = false
+    use_wsgi = false
+    views = ['rest_service.resources.Example',
+             'rest_service.resources.ExampleAdminView',
+             'rest_service.resources.ExampleUserView'  ]
+
+    using_postgres = false
+    sqlalchemy_host = '1.80.67.2'
+    sqlalchemy_port = 5432
+    sqlalchemy_user = 'postres_test'
+    sqlalchemy_pass = '9C4q&7$ES9X1a1M^gA4369p9C4q&7$ES9X1a1M^gA4369p9C4q&7$ES9X1a1M^gA4369p'
+    sqlalchemy_use_ssl = false
+    sqlalchemy_db = 'rest-service'
+
+    using_mongo = false
+    mongo_host = '1.80.67.2'
+    mongo_port = 5432
+    mongo_user = 'postres_test'
+    mongo_pass = '9C4q&7$ES9X1a1M^gA4369p9C4q&7$ES9X1a1M^gA4369p9C4q&7$ES9X1a1M^gA4369p'
+    mongo_use_ssl = false
+    mongo_db = 'rest-service'
+
+    [rest-service.odms.user]
+        name = 'users'
+        dialect = 'mongodb'
+        host = '1.80.67.4'
+        port = 27017
+        username = 'postres_test'
+        password = '9C4q&7$ES9X1a1M^gA4369p9C4q&7$ES9X1a1M^gA4369p9C4q&7$ES9X1a1M^gA4369p'
+        use_ssl = false
+#        cert_pem = '/path/rest/server.pem'
+#        key_pem = '/path/rest/server.key'
+
+        database = 'user-info-db'
+        collection = 'user'
+        controller = 'splunk_connector.data.user.ExampleUserCntr'
+        odm_class = 'rest_service.examples.example.ExampleUserODM'
+        resource = 'rest_service.examples.example.ExampleUserRsrc'
+
+    [rest-service.orms.test]
+        name = 'test'
+        dialect = 'postgres'
+        host = '1.80.67.2'
+        port = 5432
+        username = 'postres_test'
+        password = '9C4q&7$ES9X1a1M^gA4369p9C4q&7$ES9X1a1M^gA4369p9C4q&7$ES9X1a1M^gA4369p'
+        use_ssl = false
+#        cert_pem = '/path/rest/server.pem'
+#        key_pem = '/path/rest/server.key'
+
+        database = 'test-db'
+        table = 'test-db'
+        controller = 'rest_service.examples.example.ExampleAdminCntr'
+        class = 'rest_service.examples.example.ExampleAdminODM'
+        resource = 'rest_service.examples.example.ExampleAdminRsrc'

@@ -202,12 +202,12 @@ class RestService(object):
 
     @check_token
     async def handle_get_query_test(self):
-        # TODO populate query with test data
+        # TODO populate query with test endpoint
         pass
 
     @check_token
     async def handle_get_query_execute(self):
-        # TODO execute query with test data
+        # TODO execute query with test endpoint
         pass
 
 
