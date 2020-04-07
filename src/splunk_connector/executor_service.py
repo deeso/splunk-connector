@@ -51,7 +51,7 @@ def execute_splunk_job(svc_name: str, job_id: str = None, results_dict: dict = N
     if start_check is None:
         start_check = job_info.get_start_date()
     elif run_count <= 0 or run_once:
-        start_check = job_info.get_start_date()
+        end_check = job_info.get_start_date()
 
     earliest = start_check
     latest = end_check
