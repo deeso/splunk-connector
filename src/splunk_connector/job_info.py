@@ -298,10 +298,11 @@ class ScheduledJobInfo(object):
         ctime = datetime.utcnow() if ctime is None else ctime
         lctime = datetime.strptime(self.get_last_check(), TIME_FMT)
         etime = datetime.strptime(self.get_end_date(), TIME_FMT)
+        has_run = self.get_run_count() > 0
 
         if (lctime + timedelta(minutes=self.get_period())) < etime:
             return False
-        if etime < ctime:
+        if etime < ctime and has_run:
             return True
         return False
 
